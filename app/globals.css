@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --foreground: #18181b;
+    --background: #fcfaf6;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background-color: #fcfaf6;
+  /* Authentic Manga Screentone & Stippled Paper Grain */
+  background-image: 
+    radial-gradient(#18181b 0.55px, transparent 0.55px), 
+    radial-gradient(#d4cbbe 0.65px, #fcfaf6 0.65px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  min-height: 100vh;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Manga Panel / Tankōbon Card Design */
+.paper-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid #18181b;
+  box-shadow: 3px 3px 0px 0px #18181b;
+  border-radius: 12px;
+}
+
+.paper-card:hover {
+  box-shadow: 4px 4px 0px 0px #18181b;
+}
+
+.paper-card-subtle {
+  background: rgba(246, 241, 232, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid #27272a;
+  border-radius: 8px;
+}
+
+.paper-input {
+  background: #ffffff;
+  border: 1.5px solid #18181b;
+  box-shadow: 2px 2px 0px 0px #18181b;
+  border-radius: 8px;
+}
+
+.paper-input:focus {
+  border-color: #e11d48;
+  outline: none;
+  box-shadow: 2px 2px 0px 0px #e11d48;
+}
+
+/* Manga Hanko / Inkan Vermilion Stamp */
+.stamp-badge {
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  border-radius: 4px;
+  border: 1.5px solid currentColor;
+}
+
+/* Halftone Screentone Overlay Effect */
+.screentone-box {
+  background-image: radial-gradient(#18181b 0.75px, transparent 0.75px);
+  background-size: 6px 6px;
+  opacity: 0.08;
+}
+
+/* Manga Speech / Action Dialogue Frame */
+.manga-bubble {
+  border: 1.5px solid #18181b;
+  box-shadow: 3px 3px 0px 0px #18181b;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.manga-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1.2px solid #18181b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  box-shadow: 1.5px 1.5px 0px 0px #18181b;
+}
