@@ -4,53 +4,91 @@
 
 @layer base {
   :root {
-    --foreground: #2d2926;
-    --background: #fbf9f5;
+    --foreground: #18181b;
+    --background: #fcfaf6;
   }
 }
 
 body {
   color: var(--foreground);
-  background-color: #fbf9f5;
-  /* Subtle artisan paper grain & micro-texture */
-  background-image: radial-gradient(#e5dfd5 0.75px, transparent 0.75px), radial-gradient(#ede7dd 0.75px, #fbf9f5 0.75px);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 14px;
+  background-color: #fcfaf6;
+  /* Authentic Manga Screentone & Stippled Paper Grain */
+  background-image: 
+    radial-gradient(#18181b 0.55px, transparent 0.55px), 
+    radial-gradient(#d4cbbe 0.65px, #fcfaf6 0.65px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
 }
 
-/* Tactile Paper & Frosted Glass Elements */
+/* Manga Panel / Tankōbon Card Design */
 .paper-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 218, 206, 0.85);
-  box-shadow: 0 1px 3px rgba(45, 41, 38, 0.03), 0 6px 16px -4px rgba(45, 41, 38, 0.04);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid #18181b;
+  box-shadow: 3px 3px 0px 0px #18181b;
+  border-radius: 12px;
+}
+
+.paper-card:hover {
+  box-shadow: 4px 4px 0px 0px #18181b;
 }
 
 .paper-card-subtle {
-  background: rgba(251, 249, 245, 0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(230, 222, 210, 0.8);
+  background: rgba(246, 241, 232, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid #27272a;
+  border-radius: 8px;
 }
 
 .paper-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e2dace;
-  box-shadow: inset 0 1px 2px rgba(45, 41, 38, 0.02);
+  background: #ffffff;
+  border: 1.5px solid #18181b;
+  box-shadow: 2px 2px 0px 0px #18181b;
+  border-radius: 8px;
 }
 
 .paper-input:focus {
-  border-color: #c86138;
+  border-color: #e11d48;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(200, 97, 56, 0.12);
+  box-shadow: 2px 2px 0px 0px #e11d48;
 }
 
-/* Deliberate Editorial Details */
+/* Manga Hanko / Inkan Vermilion Stamp */
 .stamp-badge {
-  letter-spacing: 0.04em;
-  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-weight: 700;
   border-radius: 4px;
+  border: 1.5px solid currentColor;
+}
+
+/* Halftone Screentone Overlay Effect */
+.screentone-box {
+  background-image: radial-gradient(#18181b 0.75px, transparent 0.75px);
+  background-size: 6px 6px;
+  opacity: 0.08;
+}
+
+/* Manga Speech / Action Dialogue Frame */
+.manga-bubble {
+  border: 1.5px solid #18181b;
+  box-shadow: 3px 3px 0px 0px #18181b;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.manga-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1.2px solid #18181b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  box-shadow: 1.5px 1.5px 0px 0px #18181b;
 }

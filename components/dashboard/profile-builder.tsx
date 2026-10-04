@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { UserProfile, ExtractedDocumentFact } from "@/lib/types";
-import { ChevronRight, ChevronLeft, Upload, Trash2, CheckCircle2, MessageSquare, Edit3, Loader2, FileText, Compass } from "lucide-react";
+import { ChevronRight, ChevronLeft, Upload, Trash2, CheckCircle2, MessageSquare, Edit3, Loader2, FileText, Compass, Sparkles } from "lucide-react";
 
 interface ProfileBuilderProps {
   initialProfile: UserProfile;
@@ -100,7 +100,6 @@ export function ProfileBuilder({
   };
 
   const handleSimulatedUpload = async (docType: string, defaultName: string) => {
-    // Deliberate inspection delay
     setUploadNotice(`Reading certificate text: "${defaultName}"...`);
     await new Promise((r) => setTimeout(r, 600));
 
@@ -163,16 +162,16 @@ export function ProfileBuilder({
   };
 
   return (
-    <div className="paper-card rounded-2xl p-6 sm:p-8 space-y-6">
+    <div className="paper-card rounded-2xl p-6 sm:p-8 space-y-6 bg-white border-1.5 border-manga-ink shadow-manga">
       {/* Natural Language Self-Description Entry */}
-      <div className="p-5 rounded-xl bg-sand-100/60 border border-sand-300/80">
+      <div className="p-5 rounded-xl bg-manga-parchment border-1.5 border-manga-ink shadow-manga-sm">
         <div className="flex items-center gap-2 mb-1.5">
-          <MessageSquare className="w-4 h-4 text-terracotta-700" />
-          <h3 className="text-sm font-semibold text-warmcharcoal">
-            Natural-Language Statement: Describe Your Circumstances
+          <MessageSquare className="w-4 h-4 text-manga-vermilion" />
+          <h3 className="text-sm font-bold text-manga-ink font-mono uppercase">
+            SPEECH ENTRY: DESCRIBE YOUR CIRCUMSTANCES
           </h3>
-          <span className="text-[10px] px-2 py-0.5 rounded stamp-badge bg-sand-200 text-warmcharcoal font-medium ml-auto border border-sand-300">
-            Groq Assisted
+          <span className="text-[10px] px-2 py-0.5 rounded stamp-badge bg-white text-manga-ink font-mono font-bold ml-auto border border-manga-ink">
+            GROQ PARSER
           </span>
         </div>
         <p className="text-xs text-warmcharcoal-light mb-3">
@@ -185,18 +184,18 @@ export function ProfileBuilder({
             value={naturalText}
             onChange={(e) => setNaturalText(e.target.value)}
             placeholder="Type your background here or try: I am a 21-year-old undergraduate in Maharashtra seeking financial assistance, family income is 2.4 lakh..."
-            className="flex-1 p-3 paper-input rounded-lg text-xs text-warmcharcoal focus:outline-none"
+            className="flex-1 p-3 paper-input rounded-lg text-xs text-manga-ink focus:outline-none"
           />
           <button
             type="button"
             onClick={handleNaturalLanguageParse}
             disabled={isParsingNatural || !naturalText.trim()}
-            className="px-4 py-2.5 bg-terracotta-700 hover:bg-terracotta-800 text-white rounded-lg text-xs font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 shrink-0 shadow-sm"
+            className="px-4 py-2.5 bg-manga-ink hover:bg-manga-vermilion text-white rounded-lg text-xs font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 shrink-0 shadow-manga-sm font-mono uppercase border-1.5 border-manga-ink active:translate-x-[1px] active:translate-y-[1px]"
           >
             {isParsingNatural ? (
               <>
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                <span>Interpreting...</span>
+                <span>Parsing...</span>
               </>
             ) : (
               <>
@@ -208,7 +207,7 @@ export function ProfileBuilder({
         </div>
 
         {naturalParsedNotice && (
-          <div className="mt-3 p-2.5 bg-white/90 border border-emerald-300 rounded-lg text-xs text-emerald-800 flex items-center gap-2">
+          <div className="mt-3 p-2.5 bg-white border border-emerald-600 rounded-lg text-xs text-emerald-900 font-mono flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span>{naturalParsedNotice}</span>
           </div>
@@ -216,27 +215,27 @@ export function ProfileBuilder({
       </div>
 
       {/* Step Indicator */}
-      <div className="flex items-center justify-between border-b border-sand-200 pb-4">
+      <div className="flex items-center justify-between border-b-1.5 border-manga-ink pb-4 font-mono">
         {[
-          { num: 1, label: "Identity & Residency" },
-          { num: 2, label: "Income & Study" },
-          { num: 3, label: "Supporting Records" }
+          { num: 1, label: "01 // RESIDENCY" },
+          { num: 2, label: "02 // INCOME & STUDY" },
+          { num: 3, label: "03 // CERTIFICATES" }
         ].map((s) => (
           <div key={s.num} className="flex items-center gap-2">
             <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-1.5 border-manga-ink transition-all ${
                 step === s.num
-                  ? "bg-terracotta-700 text-white shadow-sm"
+                  ? "bg-manga-ink text-white shadow-manga-sm"
                   : step > s.num
-                  ? "bg-sand-200 text-warmcharcoal font-bold"
-                  : "bg-sand-100 text-sand-500 border border-sand-300"
+                  ? "bg-emerald-100 text-manga-ink font-bold"
+                  : "bg-manga-parchment text-sand-500"
               }`}
             >
               {step > s.num ? "✓" : s.num}
             </div>
             <span
-              className={`text-xs font-medium hidden sm:inline ${
-                step === s.num ? "text-warmcharcoal font-semibold" : "text-sand-600"
+              className={`text-xs font-bold hidden sm:inline ${
+                step === s.num ? "text-manga-ink" : "text-sand-600"
               }`}
             >
               {s.label}
@@ -249,23 +248,23 @@ export function ProfileBuilder({
         {/* Step 1: Basic Identity */}
         {step === 1 && (
           <div className="space-y-5 animate-in fade-in duration-300">
-            <h3 className="text-base font-semibold text-warmcharcoal">Step 1: Your Demographic Context</h3>
+            <h3 className="text-base font-bold text-manga-ink font-sans">Step 1: Your Demographic Context</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Full Name</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Full Name</label>
                 <input
                   type="text"
                   required
                   value={profile.fullName}
                   onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
                   placeholder="e.g. Aarav Sharma"
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Age (Years)</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Age (Years)</label>
                 <input
                   type="number"
                   min="14"
@@ -273,18 +272,18 @@ export function ProfileBuilder({
                   required
                   value={profile.age}
                   onChange={(e) => setProfile({ ...profile, age: Number(e.target.value) })}
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-mono font-medium"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Domicile / State</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Domicile / State</label>
                 <select
                   value={profile.state}
                   onChange={(e) => setProfile({ ...profile, state: e.target.value })}
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 >
                   {statesList.map((st) => (
                     <option key={st} value={st}>
@@ -295,7 +294,7 @@ export function ProfileBuilder({
               </div>
 
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Occupation</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Occupation</label>
                 <select
                   value={profile.occupation}
                   onChange={(e) => {
@@ -306,7 +305,7 @@ export function ProfileBuilder({
                       studentStatus: occ === "Student"
                     });
                   }}
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 >
                   {occupations.map((occ) => (
                     <option key={occ} value={occ}>
@@ -318,13 +317,13 @@ export function ProfileBuilder({
             </div>
 
             <div>
-              <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Stated Goal or Financial Need</label>
+              <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Stated Goal or Financial Need</label>
               <input
                 type="text"
                 value={profile.goalOrNeed || ""}
                 onChange={(e) => setProfile({ ...profile, goalOrNeed: e.target.value })}
                 placeholder="e.g. Tuition fee waiver, seed capital grant, skill stipend, agricultural support"
-                className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
               />
             </div>
 
@@ -332,7 +331,7 @@ export function ProfileBuilder({
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-terracotta-700 hover:bg-terracotta-800 text-white font-medium text-xs transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-manga-ink hover:bg-manga-vermilion text-white font-bold text-xs transition-colors shadow-manga-sm border-1.5 border-manga-ink font-mono uppercase"
               >
                 <span>Continue to Financials</span>
                 <ChevronRight className="w-4 h-4" />
@@ -344,34 +343,34 @@ export function ProfileBuilder({
         {/* Step 2: Financial & Educational */}
         {step === 2 && (
           <div className="space-y-5 animate-in fade-in duration-300">
-            <h3 className="text-base font-semibold text-warmcharcoal">Step 2: Educational Context & Family Income</h3>
+            <h3 className="text-base font-bold text-manga-ink font-sans">Step 2: Educational Context & Family Income</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">
                   Annual Family Income (INR)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-2 text-sand-700 font-medium text-sm">₹</span>
+                  <span className="absolute left-3.5 top-2 text-manga-ink font-bold text-sm">₹</span>
                   <input
                     type="number"
                     step="10000"
                     required
                     value={profile.annualIncome}
                     onChange={(e) => setProfile({ ...profile, annualIncome: Number(e.target.value) })}
-                    className="w-full pl-8 pr-4 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                    className="w-full pl-8 pr-4 py-2 paper-input rounded-lg text-sm text-manga-ink font-mono font-bold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">
                   Reservation / Category
                 </label>
                 <select
                   value={profile.category}
                   onChange={(e) => setProfile({ ...profile, category: e.target.value })}
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 >
                   <option value="General">General / Open</option>
                   <option value="General / EWS">General (Economically Weaker Section - EWS)</option>
@@ -384,11 +383,11 @@ export function ProfileBuilder({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Education Level</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Education Level</label>
                 <select
                   value={profile.educationLevel}
                   onChange={(e) => setProfile({ ...profile, educationLevel: e.target.value })}
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 >
                   {educationLevels.map((lvl) => (
                     <option key={lvl} value={lvl}>
@@ -399,13 +398,13 @@ export function ProfileBuilder({
               </div>
 
               <div>
-                <label className="text-xs font-medium text-warmcharcoal-light block mb-1">Course / Discipline</label>
+                <label className="text-xs font-bold text-manga-ink block mb-1 font-mono uppercase">Course / Discipline</label>
                 <input
                   type="text"
                   value={profile.course || ""}
                   onChange={(e) => setProfile({ ...profile, course: e.target.value })}
                   placeholder="e.g. B.Tech Engineering, Biotechnology, Electrical Vocational"
-                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-warmcharcoal"
+                  className="w-full px-3.5 py-2 paper-input rounded-lg text-sm text-manga-ink font-medium"
                 />
               </div>
             </div>
@@ -414,7 +413,7 @@ export function ProfileBuilder({
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-warmcharcoal-light hover:bg-sand-100 text-xs font-medium"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white border-1.5 border-manga-ink text-manga-ink hover:bg-manga-parchment text-xs font-bold font-mono uppercase shadow-manga-sm"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -423,7 +422,7 @@ export function ProfileBuilder({
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-terracotta-700 hover:bg-terracotta-800 text-white font-medium text-xs transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg bg-manga-ink hover:bg-manga-vermilion text-white font-bold text-xs transition-colors shadow-manga-sm border-1.5 border-manga-ink font-mono uppercase"
               >
                 <span>Continue to Documents</span>
                 <ChevronRight className="w-4 h-4" />
@@ -435,74 +434,74 @@ export function ProfileBuilder({
         {/* Step 3: Document Verification & Extraction */}
         {step === 3 && (
           <div className="space-y-5 animate-in fade-in duration-300">
-            <h3 className="text-base font-semibold text-warmcharcoal">Step 3: Verification & Certificate Scrutiny</h3>
+            <h3 className="text-base font-bold text-manga-ink font-sans">Step 3: Verification & Certificate Scrutiny</h3>
 
             {uploadNotice && (
-              <div className="p-3 bg-amberwarm-50 border border-amberwarm-300 rounded-lg text-xs text-amberwarm-900 flex items-center gap-2">
+              <div className="p-3 bg-amberwarm-100 border-1.5 border-manga-ink rounded-lg text-xs text-manga-ink font-mono font-bold flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>{uploadNotice}</span>
               </div>
             )}
 
             {/* Quick add certificate chips */}
-            <div className="p-4 rounded-xl bg-sand-100/60 border border-sand-300/80">
-              <span className="text-xs font-medium text-warmcharcoal block mb-2">
+            <div className="p-4 rounded-xl bg-manga-parchment border-1.5 border-manga-ink shadow-manga-sm">
+              <span className="text-xs font-bold text-manga-ink block mb-2 font-mono uppercase">
                 Attach Sample Certificate Proofs:
               </span>
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() => handleSimulatedUpload("income_certificate", "Official_Income_Certificate_2026.pdf")}
-                  className="px-3 py-1.5 rounded-lg bg-white/90 border border-sand-300 hover:border-terracotta-600 hover:text-terracotta-800 text-xs font-medium text-warmcharcoal shadow-2xs flex items-center gap-1.5 transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-white border-1.5 border-manga-ink hover:bg-sand-100 text-xs font-bold text-manga-ink shadow-manga-sm flex items-center gap-1.5 transition-all font-mono"
                 >
-                  <Upload className="w-3.5 h-3.5 text-terracotta-700" />
+                  <Upload className="w-3.5 h-3.5 text-manga-vermilion" />
                   <span>+ Income Certificate (₹2.4L)</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleSimulatedUpload("aadhaar_card", "Aadhaar_National_ID.pdf")}
-                  className="px-3 py-1.5 rounded-lg bg-white/90 border border-sand-300 hover:border-terracotta-600 hover:text-terracotta-800 text-xs font-medium text-warmcharcoal shadow-2xs flex items-center gap-1.5 transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-white border-1.5 border-manga-ink hover:bg-sand-100 text-xs font-bold text-manga-ink shadow-manga-sm flex items-center gap-1.5 transition-all font-mono"
                 >
-                  <Upload className="w-3.5 h-3.5 text-terracotta-700" />
+                  <Upload className="w-3.5 h-3.5 text-manga-vermilion" />
                   <span>+ Aadhaar Identity Proof</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleSimulatedUpload("bonafide_certificate", "College_Bonafide_Study.pdf")}
-                  className="px-3 py-1.5 rounded-lg bg-white/90 border border-sand-300 hover:border-terracotta-600 hover:text-terracotta-800 text-xs font-medium text-warmcharcoal shadow-2xs flex items-center gap-1.5 transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-white border-1.5 border-manga-ink hover:bg-sand-100 text-xs font-bold text-manga-ink shadow-manga-sm flex items-center gap-1.5 transition-all font-mono"
                 >
-                  <Upload className="w-3.5 h-3.5 text-terracotta-700" />
+                  <Upload className="w-3.5 h-3.5 text-manga-vermilion" />
                   <span>+ Bonafide Certificate</span>
                 </button>
               </div>
             </div>
 
             {/* Currently Attached Documents */}
-            <div className="space-y-3">
-              <span className="text-xs font-medium text-warmcharcoal block">
+            <div className="space-y-3 font-mono">
+              <span className="text-xs font-bold text-manga-ink block uppercase">
                 Attached Verification Proofs ({documents.length}):
               </span>
 
               {documents.length === 0 ? (
-                <div className="p-4 rounded-xl border border-dashed border-sand-300 text-center text-xs text-sand-600">
+                <div className="p-4 rounded-xl border border-dashed border-manga-ink text-center text-xs text-warmcharcoal-muted">
                   No documents attached yet. Evaluation will proceed using your stated profile facts.
                 </div>
               ) : (
                 documents.map((doc) => (
                   <div
                     key={doc.documentType}
-                    className="p-3 rounded-lg bg-white/90 border border-sand-300 shadow-2xs flex items-center justify-between"
+                    className="p-3 rounded-lg bg-white border-1.5 border-manga-ink shadow-manga-sm flex items-center justify-between"
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-warmcharcoal">{doc.fileName}</span>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">
-                          {Math.round(doc.confidence * 100)}% Confidence Stamp
+                        <span className="text-xs font-bold text-manga-ink">{doc.fileName}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-manga-ink font-bold">
+                          {Math.round(doc.confidence * 100)}% CONFIDENCE
                         </span>
                       </div>
-                      <div className="text-[11px] text-warmcharcoal-muted mt-1 font-mono">
+                      <div className="text-[11px] text-warmcharcoal-muted mt-1">
                         {Object.entries(doc.extractedFields)
                           .slice(0, 3)
                           .map(([k, v]) => `${k}: ${v}`)
@@ -513,7 +512,7 @@ export function ProfileBuilder({
                     <button
                       type="button"
                       onClick={() => removeDoc(doc.documentType)}
-                      className="p-1 text-sand-600 hover:text-rose-700 rounded"
+                      className="p-1 text-manga-ink hover:text-manga-vermilion rounded"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -526,7 +525,7 @@ export function ProfileBuilder({
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-warmcharcoal-light hover:bg-sand-100 text-xs font-medium"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white border-1.5 border-manga-ink text-manga-ink hover:bg-manga-parchment text-xs font-bold font-mono uppercase shadow-manga-sm"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -535,7 +534,7 @@ export function ProfileBuilder({
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-terracotta-700 hover:bg-terracotta-800 text-white font-semibold text-xs shadow-sm transition-all disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-manga-ink hover:bg-manga-vermilion text-white font-bold text-xs shadow-manga border-1.5 border-manga-ink transition-all disabled:opacity-50 font-mono uppercase"
               >
                 <Compass className="w-4 h-4" />
                 <span>{isLoading ? "Reviewing..." : "Scan Opportunities & Build Plan"}</span>

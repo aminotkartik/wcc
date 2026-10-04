@@ -115,16 +115,16 @@ function DashboardContent() {
   return (
     <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       {/* Top Header & Fast Track Persona Selector */}
-      <div className="paper-card rounded-2xl p-6 sm:p-7 mb-8">
+      <div className="paper-card rounded-2xl p-6 sm:p-7 mb-8 bg-white border-1.5 border-manga-ink shadow-manga">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-terracotta-700 stamp-badge px-2 py-0.5 bg-sand-200/70 border border-sand-300">
-                Evaluation Workspace
+              <span className="text-[11px] font-bold uppercase tracking-wider text-manga-ink stamp-badge px-2 py-0.5 bg-manga-parchment border border-manga-ink font-mono shadow-manga-sm">
+                PANEL ARCHIVE // WORKSPACE
               </span>
-              <span className="text-sand-600 text-xs">• Verified Reference Data</span>
+              <span className="text-sand-700 text-xs font-mono">• Verified Criteria</span>
             </div>
-            <h1 className="text-2xl font-bold text-warmcharcoal tracking-tight font-sans">
+            <h1 className="text-2xl font-black text-manga-ink tracking-tight font-sans">
               Eligibility & Opportunity Assessment
             </h1>
             <p className="text-xs text-warmcharcoal-light mt-1 max-w-xl leading-relaxed">
@@ -135,13 +135,13 @@ function DashboardContent() {
           {/* Persona Selector Dropdown */}
           <div className="flex items-center gap-3">
             <div className="flex flex-col">
-              <span className="text-[10px] font-semibold uppercase text-sand-700 tracking-wider">
+              <span className="text-[10px] font-bold uppercase text-manga-ink tracking-wider font-mono">
                 Select Persona Profile
               </span>
               <select
                 value={selectedPersonaIndex}
                 onChange={(e) => handlePersonaChange(Number(e.target.value))}
-                className="mt-1 px-3 py-2 paper-input rounded-lg text-xs font-medium text-warmcharcoal focus:outline-none"
+                className="mt-1 px-3 py-2 paper-input rounded-lg text-xs font-bold text-manga-ink focus:outline-none font-mono"
               >
                 {DEMO_PERSONAS.map((p, idx) => (
                   <option key={p.id} value={idx}>
@@ -154,7 +154,7 @@ function DashboardContent() {
             <button
               onClick={() => runAssessment(profile, documents)}
               disabled={isLoading}
-              className="mt-4 px-4 py-2 bg-terracotta-700 hover:bg-terracotta-800 text-white rounded-lg text-xs font-semibold shadow-sm transition-all disabled:opacity-50 flex items-center gap-1.5"
+              className="mt-4 px-4 py-2 bg-manga-ink hover:bg-manga-vermilion text-white rounded-lg text-xs font-bold shadow-manga-sm transition-all disabled:opacity-50 flex items-center gap-1.5 font-mono uppercase"
             >
               <Compass className="w-3.5 h-3.5" />
               <span>{isLoading ? "Reviewing..." : "Run Evaluation"}</span>
@@ -163,8 +163,8 @@ function DashboardContent() {
         </div>
 
         {/* Active Persona Banner Details */}
-        <div className="mt-5 pt-3.5 border-t border-sand-200/80 flex flex-wrap items-center gap-4 text-xs text-warmcharcoal-light">
-          <span className="font-semibold text-warmcharcoal">
+        <div className="mt-5 pt-3.5 border-t-1.5 border-manga-ink flex flex-wrap items-center gap-4 text-xs font-mono text-manga-ink">
+          <span className="font-bold">
             {currentPersona.profile.fullName} ({currentPersona.profile.age}y, {currentPersona.profile.state})
           </span>
           <span className="text-sand-400">•</span>
@@ -180,15 +180,15 @@ function DashboardContent() {
 
       {/* Deliberate Pacing Status Experience */}
       {isLoading && (
-        <div className="mb-8 p-6 paper-card rounded-2xl border-terracotta-200/80 animate-in fade-in duration-300">
+        <div className="mb-8 p-6 paper-card rounded-2xl border-1.5 border-manga-ink shadow-manga animate-in fade-in duration-300 bg-white">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2.5">
-              <Feather className="w-4 h-4 text-terracotta-700 animate-pulse" />
-              <h3 className="text-sm font-semibold text-warmcharcoal">
-                Evaluating Eligibility & Cross-Referencing Knowledge Base...
+              <Feather className="w-4 h-4 text-manga-vermilion animate-pulse" />
+              <h3 className="text-sm font-bold text-manga-ink font-mono uppercase tracking-wider">
+                SCRUTINY IN PROGRESS // CROSS-REFERENCING CRITERIA...
               </h3>
             </div>
-            <span className="text-[11px] font-mono text-sand-700">
+            <span className="text-[11px] font-mono font-bold text-manga-vermilion">
               {aiStatusStage === 1 && "Verifying facts..."}
               {aiStatusStage === 2 && "Scanning criteria..."}
               {aiStatusStage === 3 && "Auditing documents..."}
@@ -196,21 +196,21 @@ function DashboardContent() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-            <div className={`p-3 rounded-lg border transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 1 ? "bg-amberwarm-50/90 border-amberwarm-300 text-amberwarm-900 font-medium" : "bg-white/40 border-sand-200 text-sand-500"}`}>
-              {aiStatusStage > 1 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : <Clock className="w-4 h-4 shrink-0 text-amberwarm-700 animate-spin" />}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs font-mono">
+            <div className={`p-3 rounded-lg border-1.5 border-manga-ink transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 1 ? "bg-amberwarm-100 text-manga-ink font-bold shadow-manga-sm" : "bg-manga-parchment text-sand-500"}`}>
+              {aiStatusStage > 1 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : <Clock className="w-4 h-4 shrink-0 text-manga-vermilion animate-spin" />}
               <span>1. Profile Understanding</span>
             </div>
-            <div className={`p-3 rounded-lg border transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 2 ? "bg-amberwarm-50/90 border-amberwarm-300 text-amberwarm-900 font-medium" : "bg-white/40 border-sand-200 text-sand-500"}`}>
-              {aiStatusStage > 2 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : aiStatusStage === 2 ? <Clock className="w-4 h-4 shrink-0 text-amberwarm-700 animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
+            <div className={`p-3 rounded-lg border-1.5 border-manga-ink transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 2 ? "bg-amberwarm-100 text-manga-ink font-bold shadow-manga-sm" : "bg-manga-parchment text-sand-500"}`}>
+              {aiStatusStage > 2 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : aiStatusStage === 2 ? <Clock className="w-4 h-4 shrink-0 text-manga-vermilion animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
               <span>2. Program Matching</span>
             </div>
-            <div className={`p-3 rounded-lg border transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 3 ? "bg-amberwarm-50/90 border-amberwarm-300 text-amberwarm-900 font-medium" : "bg-white/40 border-sand-200 text-sand-500"}`}>
-              {aiStatusStage > 3 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : aiStatusStage === 3 ? <Clock className="w-4 h-4 shrink-0 text-amberwarm-700 animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
+            <div className={`p-3 rounded-lg border-1.5 border-manga-ink transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 3 ? "bg-amberwarm-100 text-manga-ink font-bold shadow-manga-sm" : "bg-manga-parchment text-sand-500"}`}>
+              {aiStatusStage > 3 ? <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" /> : aiStatusStage === 3 ? <Clock className="w-4 h-4 shrink-0 text-manga-vermilion animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
               <span>3. Document Gap Audit</span>
             </div>
-            <div className={`p-3 rounded-lg border transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 4 ? "bg-amberwarm-50/90 border-amberwarm-300 text-amberwarm-900 font-medium" : "bg-white/40 border-sand-200 text-sand-500"}`}>
-              {aiStatusStage === 4 ? <Clock className="w-4 h-4 shrink-0 text-amberwarm-700 animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
+            <div className={`p-3 rounded-lg border-1.5 border-manga-ink transition-all duration-300 flex items-center gap-2.5 ${aiStatusStage >= 4 ? "bg-amberwarm-100 text-manga-ink font-bold shadow-manga-sm" : "bg-manga-parchment text-sand-500"}`}>
+              {aiStatusStage === 4 ? <Clock className="w-4 h-4 shrink-0 text-manga-vermilion animate-spin" /> : <Clock className="w-4 h-4 shrink-0 text-sand-400" />}
               <span>4. Action Roadmap</span>
             </div>
           </div>
@@ -218,13 +218,13 @@ function DashboardContent() {
       )}
 
       {/* Tab Navigation */}
-      <div className="flex items-center gap-2 border-b border-sand-300/80 mb-6">
+      <div className="flex items-center gap-2 border-b-2 border-manga-ink mb-6">
         <button
           onClick={() => setActiveTab("profile")}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg border-b-2 transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2.5 text-xs font-bold rounded-t-lg border-2 border-b-0 border-manga-ink transition-all flex items-center gap-1.5 font-mono ${
             activeTab === "profile"
-              ? "border-terracotta-700 text-terracotta-800 bg-white/70"
-              : "border-transparent text-warmcharcoal-light hover:text-warmcharcoal"
+              ? "bg-manga-ink text-white shadow-manga-sm -mb-[2px] z-10"
+              : "bg-white text-manga-ink hover:bg-manga-parchment"
           }`}
         >
           <UserCheck className="w-4 h-4" />
@@ -236,12 +236,12 @@ function DashboardContent() {
             if (assessmentResults) setActiveTab("results");
           }}
           disabled={!assessmentResults}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg border-b-2 transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2.5 text-xs font-bold rounded-t-lg border-2 border-b-0 border-manga-ink transition-all flex items-center gap-1.5 font-mono ${
             activeTab === "results"
-              ? "border-terracotta-700 text-terracotta-800 bg-white/70"
+              ? "bg-manga-ink text-white shadow-manga-sm -mb-[2px] z-10"
               : assessmentResults
-              ? "border-transparent text-warmcharcoal-light hover:text-warmcharcoal"
-              : "border-transparent text-sand-500 cursor-not-allowed"
+              ? "bg-white text-manga-ink hover:bg-manga-parchment"
+              : "bg-sand-100 text-sand-400 border-sand-300 cursor-not-allowed"
           }`}
         >
           <Layers className="w-4 h-4" />
@@ -255,15 +255,15 @@ function DashboardContent() {
             if (actionPlan) setActiveTab("action_plan");
           }}
           disabled={!actionPlan}
-          className={`px-4 py-2.5 text-xs font-semibold rounded-t-lg border-b-2 transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2.5 text-xs font-bold rounded-t-lg border-2 border-b-0 border-manga-ink transition-all flex items-center gap-1.5 font-mono ${
             activeTab === "action_plan"
-              ? "border-terracotta-700 text-terracotta-800 bg-white/70"
+              ? "bg-manga-ink text-white shadow-manga-sm -mb-[2px] z-10"
               : actionPlan
-              ? "border-transparent text-warmcharcoal-light hover:text-warmcharcoal"
-              : "border-transparent text-sand-500 cursor-not-allowed"
+              ? "bg-white text-manga-ink hover:bg-manga-parchment"
+              : "bg-sand-100 text-sand-400 border-sand-300 cursor-not-allowed"
           }`}
         >
-          <FileCheck className="w-4 h-4 text-terracotta-700" />
+          <FileCheck className="w-4 h-4 text-manga-vermilion" />
           <span>3. Opportunity Action Plan</span>
         </button>
       </div>
@@ -307,7 +307,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen bg-sand-50">
       <Navigation />
-      <Suspense fallback={<div className="p-12 text-center text-xs text-sand-700">Loading Assessment Session...</div>}>
+      <Suspense fallback={<div className="p-12 text-center text-xs font-mono text-manga-ink">Loading Assessment Session...</div>}>
         <DashboardContent />
       </Suspense>
       <Footer />
