@@ -1,12 +1,12 @@
 import { UniversalProgram } from "../types";
 
 export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
-  // 1. Scholarship (Universal)
+  // 1. Central Sector Scholarship (University Students)
   {
     id: "prog_001",
     name: "Central Sector Merit-Cum-Means Higher Education Scholarship",
     type: "Scholarship",
-    provider: "Ministry of Education, Department of Higher Education",
+    provider: "Ministry of Education, Dept of Higher Education",
     country: "India",
     state: "All India",
     description: "Merit-cum-means scholarship for undergraduate and postgraduate university students across all Indian states and Union Territories.",
@@ -31,7 +31,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 2. Scholarship (State specific - Maharashtra)
+  // 2. Post-Matric Professional Degree Scholarship
   {
     id: "prog_002",
     name: "Post-Matric Professional Technical Degree Scholarship",
@@ -62,7 +62,97 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 3. Fellowship (Research & Advanced Studies)
+  // 3. AICTE Pragati Scholarship for Girls in Technical Education
+  {
+    id: "prog_013",
+    name: "AICTE Pragati Scholarship Scheme for Girl Students",
+    type: "Scholarship",
+    provider: "All India Council for Technical Education (AICTE)",
+    country: "India",
+    state: "All India",
+    description: "Dedicated scholarship empowering young women admitted to 1st year degree/diploma technical courses in recognized institutions.",
+    targetUsers: "Female students enrolled in technical degree or diploma courses with family income ≤ ₹8 Lakhs",
+    benefitAmount: "₹50,000 / year (towards tuition & college expenses)",
+    benefitDescription: "Direct DBT annual disbursement for duration of standard degree program",
+    eligibilityCriteria: [
+      { field: "studentStatus", operator: "boolean_equals", value: true, label: "Enrolled in AICTE recognized technical degree", mandatory: true },
+      { field: "annualIncome", operator: "less_than_or_equal", value: 800000, label: "Family income ≤ ₹8,00,000", mandatory: true },
+      { field: "gender", operator: "equals", value: "Female", label: "Applicant must identify as Female", mandatory: true }
+    ],
+    requiredDocuments: [
+      { id: "income_certificate", name: "Family Income Certificate", description: "Issued by competent revenue authority" },
+      { id: "bonafide_certificate", name: "College Admission Proof & Bonafide", description: "From AICTE affiliated institute dean" },
+      { id: "aadhaar_card", name: "Aadhaar Card", description: "Linked to candidate's bank account" }
+    ],
+    applicationProcess: "Online Portal",
+    applicationUrl: "https://www.aicte-pragati-saksham-gov.in",
+    sourceUrl: "https://www.aicte-pragati-saksham-gov.in",
+    sourceName: "National Scholarship Portal & AICTE",
+    lastVerifiedAt: "2026-09-12",
+    status: "Active"
+  },
+
+  // 4. AICTE Saksham Scholarship for Specially-Abled Students
+  {
+    id: "prog_014",
+    name: "AICTE Saksham Scholarship for Differently-Abled Technical Students",
+    type: "Scholarship",
+    provider: "All India Council for Technical Education (AICTE)",
+    country: "India",
+    state: "All India",
+    description: "Financial assistance encouraging specially-abled youth (disability ≥ 40%) to pursue higher technical professional qualifications.",
+    targetUsers: "Differently-abled students enrolled in technical degree/diploma courses with income ≤ ₹8 Lakhs",
+    benefitAmount: "₹50,000 / year + Assistive Device Allowance",
+    benefitDescription: "Tuition grant plus study materials and adaptive aid grant",
+    eligibilityCriteria: [
+      { field: "studentStatus", operator: "boolean_equals", value: true, label: "Enrolled student in recognized college", mandatory: true },
+      { field: "disabilityStatus", operator: "boolean_equals", value: true, label: "Valid disability status (≥ 40%)", mandatory: true },
+      { field: "annualIncome", operator: "less_than_or_equal", value: 800000, label: "Family income ≤ ₹8,00,000", mandatory: true }
+    ],
+    requiredDocuments: [
+      { id: "disability_certificate", name: "Disability Certificate (UDID / Medical Board)", description: "Certified by district civil surgeon" },
+      { id: "bonafide_certificate", name: "College Study Certificate", description: "Enrollment letter from college registrar" },
+      { id: "income_certificate", name: "Income Certificate", description: "Issued by revenue magistrate" }
+    ],
+    applicationProcess: "Online Portal",
+    applicationUrl: "https://scholarships.gov.in",
+    sourceUrl: "https://scholarships.gov.in",
+    sourceName: "AICTE / National Scholarship Portal",
+    lastVerifiedAt: "2026-09-10",
+    status: "Active"
+  },
+
+  // 5. Inspire Scholarship (SHE) for Basic Sciences
+  {
+    id: "prog_015",
+    name: "INSPIRE Scholarship for Higher Education (SHE)",
+    type: "Scholarship",
+    provider: "Department of Science and Technology (DST), Govt of India",
+    country: "India",
+    state: "All India",
+    description: "Prestigious national scholarship for top 1% meritorious students undertaking basic and natural science courses (B.Sc., BS-MS, M.Sc.).",
+    targetUsers: "Meritorious students studying natural or fundamental sciences aged 17–22",
+    benefitAmount: "₹80,000 / year (₹60,000 stipend + ₹20,000 summer mentorship grant)",
+    benefitDescription: "Direct DBT disbursement for 5 years of higher scientific study",
+    eligibilityCriteria: [
+      { field: "studentStatus", operator: "boolean_equals", value: true, label: "Enrolled in natural/fundamental sciences degree", mandatory: true },
+      { field: "age", operator: "greater_than_or_equal", value: 17, label: "Age ≥ 17", mandatory: true },
+      { field: "age", operator: "less_than_or_equal", value: 23, label: "Age ≤ 23", mandatory: true }
+    ],
+    requiredDocuments: [
+      { id: "education_certificate", name: "Class 12th Marksheet & Advisory Note", description: "Top 1% rank certificate or KVPY/JEE rank card" },
+      { id: "bonafide_certificate", name: "University Department Study Bonafide", description: "Verification from university head" },
+      { id: "bank_passbook", name: "SBI Account Passbook Details", description: "Dedicated account with State Bank of India" }
+    ],
+    applicationProcess: "Online Portal",
+    applicationUrl: "https://online-inspire.gov.in",
+    sourceUrl: "https://online-inspire.gov.in",
+    sourceName: "DST INSPIRE Official Secretariat",
+    lastVerifiedAt: "2026-08-25",
+    status: "Active"
+  },
+
+  // 6. PMRF Research Fellowship
   {
     id: "prog_003",
     name: "Prime Minister's Research Fellowship (PMRF) Scheme",
@@ -70,7 +160,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     provider: "Ministry of Education & National Research Foundation",
     country: "India",
     state: "All India",
-    description: "Prestigious national research fellowship attracting meritorious doctoral scholars for Ph.D. programs in science, technology, and engineering.",
+    description: "National research fellowship attracting doctoral scholars for Ph.D. programs in science, technology, and engineering.",
     targetUsers: "Doctoral and postgraduate research scholars in STEM and interdisciplinary fields",
     benefitAmount: "₹70,000 – ₹80,000 / month + ₹2 Lakh Annual Research Contingency",
     benefitDescription: "Direct monthly stipend for up to 5 years + annual travel/research grant",
@@ -91,7 +181,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 4. Fellowship (Young Innovators)
+  // 7. National Youth Innovation Fellowship
   {
     id: "prog_004",
     name: "National Youth Innovation Fellowship",
@@ -120,7 +210,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 5. Grant (Startups & Innovators)
+  // 8. Startup Seed Fund Grant
   {
     id: "prog_005",
     name: "Startup India Seed Fund Grant (SISFS)",
@@ -149,7 +239,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 6. Grant (Agriculture & Farmers)
+  // 9. PM-KISAN Agriculture Grant
   {
     id: "prog_006",
     name: "PM-KISAN Direct Farmer Income Support Grant",
@@ -177,7 +267,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 7. Subsidy (Credit Linked - Self Employed / Micro Enterprises)
+  // 10. PM SVANidhi Micro-Credit Subsidy
   {
     id: "prog_007",
     name: "PM SVANidhi Micro-Credit & Interest Subsidy",
@@ -205,7 +295,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 8. Subsidy (Capital MSME - Entrepreneurship)
+  // 11. PMEGP Credit Linked Capital Subsidy
   {
     id: "prog_008",
     name: "Prime Minister's Employment Generation Programme (PMEGP)",
@@ -234,7 +324,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 9. Welfare Scheme (Social Security & Food/Accommodation Grant)
+  // 12. Karnataka Vidyasiri Welfare Grant
   {
     id: "prog_009",
     name: "Karnataka Vidyasiri Higher Education Welfare Grant",
@@ -264,7 +354,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 10. Welfare Scheme (Social Assistance / SC Accommodation)
+  // 13. Swadhar Higher Education Accommodation Scheme
   {
     id: "prog_010",
     name: "Social Justice Higher Education Accommodation Scheme (Swadhar)",
@@ -296,7 +386,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 11. Skill Program
+  // 14. PMKVY Skill Program
   {
     id: "prog_011",
     name: "PMKVY 4.0 Skill Certification & Apprenticeship Grant",
@@ -324,7 +414,7 @@ export const UNIVERSAL_PROGRAMS: UniversalProgram[] = [
     status: "Active"
   },
 
-  // 12. Entrepreneurship Program
+  // 15. Stand-Up India Enterprise Credit Support
   {
     id: "prog_012",
     name: "Stand-Up India Enterprise Credit Support",

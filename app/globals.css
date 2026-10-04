@@ -2,31 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 41, 37, 36;
-  --background-start: #faf8f5;
-  --background-end: #f5f0e8;
+@layer base {
+  :root {
+    --foreground: #2d2926;
+    --background: #fbf9f5;
+  }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: #faf8f5;
+  color: var(--foreground);
+  background-color: #fbf9f5;
+  /* Subtle artisan paper grain & micro-texture */
+  background-image: radial-gradient(#e5dfd5 0.75px, transparent 0.75px), radial-gradient(#ede7dd 0.75px, #fbf9f5 0.75px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Warm glassmorphism */
-.warm-panel {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(235, 225, 210, 0.85);
+/* Tactile Paper & Frosted Glass Elements */
+.paper-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 218, 206, 0.85);
+  box-shadow: 0 1px 3px rgba(45, 41, 38, 0.03), 0 6px 16px -4px rgba(45, 41, 38, 0.04);
 }
 
-.warm-card {
-  background: #ffffff;
-  border: 1px solid #ebe1d2;
+.paper-card-subtle {
+  background: rgba(251, 249, 245, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(230, 222, 210, 0.8);
 }
 
-.warm-card:hover {
-  border-color: #dc6838;
+.paper-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e2dace;
+  box-shadow: inset 0 1px 2px rgba(45, 41, 38, 0.02);
+}
+
+.paper-input:focus {
+  border-color: #c86138;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(200, 97, 56, 0.12);
+}
+
+/* Deliberate Editorial Details */
+.stamp-badge {
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  border-radius: 4px;
 }
