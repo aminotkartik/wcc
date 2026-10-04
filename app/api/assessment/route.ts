@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { assessAllSchemes } from "@/lib/eligibility/engine";
+import { assessAllPrograms } from "@/lib/eligibility/engine";
 import { generateNaturalExplanation } from "@/lib/ai/prompts";
 import { UserProfile, ExtractedDocumentFact } from "@/lib/types";
 
@@ -16,8 +16,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Run deterministic rules engine
-    const rawMatches = assessAllSchemes(profile, documents);
+    // Run deterministic rules engine across all universal programs
+    const rawMatches = assessAllPrograms(profile, documents);
 
     // Augment with explainability summaries
     const enrichedMatches = rawMatches.map(m => ({
@@ -33,7 +33,8 @@ export async function POST(request: Request) {
         age: profile.age,
         state: profile.state,
         income: profile.annualIncome,
-        occupation: profile.occupation
+        occupation: profile.occupation,
+        goal: profile.goalOrNeed || "All relevant opportunities"
       },
       totalEvaluated: enrichedMatches.length,
       highConfidenceMatches: enrichedMatches.filter(m => m.status === "likely_eligible").length,

@@ -8,24 +8,48 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#f0f7ff",
-          100: "#e0effe",
-          200: "#b9ddfd",
-          300: "#7cc2fb",
-          400: "#36a2f7",
-          500: "#0c85eb",
-          600: "#0269c7",
-          700: "#0354a1",
-          800: "#074785",
-          900: "#0c3b6e",
-          950: "#082548",
+        // Warm palette: Cream, ivory, warm beige, terracotta, burnt orange, amber, warm charcoal
+        sand: {
+          50: "#faf8f5",
+          100: "#f5f0e8",
+          200: "#ebe1d2",
+          300: "#decbb5",
+          400: "#cbaf92",
+          500: "#b89574",
+          600: "#a67f60",
+          700: "#8a664e",
+          800: "#705342",
+          900: "#5c4438",
         },
-        civic: {
-          emerald: "#10b981",
-          amber: "#f59e0b",
-          indigo: "#6366f1",
-          slate: "#0f172a"
+        terracotta: {
+          50: "#fdf6f0",
+          100: "#fbeade",
+          200: "#f6d3bc",
+          300: "#eeb493",
+          400: "#e48c66",
+          500: "#dc6838",
+          600: "#c74e25",
+          700: "#a63d1f",
+          800: "#86331e",
+          900: "#6e2e1c",
+          950: "#3d140a",
+        },
+        amberwarm: {
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
+          900: "#78350f",
+        },
+        warmcharcoal: {
+          DEFAULT: "#292524",
+          light: "#44403c",
+          muted: "#78716c",
         }
       },
       fontFamily: {

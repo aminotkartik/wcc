@@ -1,23 +1,33 @@
+export type ProgramType =
+  | "Scholarship"
+  | "Fellowship"
+  | "Grant"
+  | "Subsidy"
+  | "Welfare Scheme"
+  | "Skill Program"
+  | "Entrepreneurship";
+
 export interface UserProfile {
   id?: string;
   fullName: string;
   age: number;
   gender?: string;
-  state: string; // e.g. "Maharashtra", "Karnataka", "All India"
-  occupation: string; // "Student", "Self-Employed", "Farmer", "Unemployed", "Salaried"
+  state: string; // e.g. "Maharashtra", "Karnataka", "Delhi", "All India"
+  occupation: string; // "Student", "Self-Employed", "Farmer", "Unemployed", "Salaried Professional", "Artisan"
   studentStatus: boolean;
-  educationLevel: string; // "Undergraduate", "Postgraduate", "High School", "Diploma"
-  course?: string; // e.g. "B.Tech Engineering", "Arts", "Medicine"
-  institutionType?: string; // "Government", "Private Recognized", "Autonomous"
+  educationLevel: string; // "Undergraduate", "Postgraduate", "High School", "Diploma", "None/Basic"
+  course?: string; // e.g. "Engineering", "Arts", "Medicine", "Skill Diploma"
+  institutionType?: string;
   annualIncome: number; // in INR e.g. 240000
-  category?: string; // "General", "OBC", "SC", "ST", "EWS"
+  category?: string; // "General", "General / EWS", "OBC", "SC", "ST"
+  goalOrNeed?: string; // e.g. "Tuition waiver", "Seed capital loan", "Skill stipend"
   disabilityStatus?: boolean;
   minorityStatus?: boolean;
   ruralArea?: boolean;
 }
 
 export interface ExtractedDocumentFact {
-  documentType: string; // "income_certificate", "student_id", "aadhaar_card", "caste_certificate", "bonafide_certificate"
+  documentType: string;
   fileName: string;
   confidence: number;
   extractedFields: Record<string, any>;
@@ -41,37 +51,38 @@ export interface SchemeCriterion {
   mandatory: boolean;
 }
 
-export interface Scheme {
+export interface UniversalProgram {
   id: string;
   name: string;
-  category: "Education & Scholarships" | "Skill & Employment" | "Agriculture & Rural" | "Social Welfare" | "Entrepreneurship";
-  shortDescription: string;
-  fullDescription: string;
+  type: ProgramType;
+  provider: string; // Ministry, Foundation, or Department
+  country: string; // "India"
+  state: string; // Specific State or "All India"
+  description: string;
+  targetUsers: string;
   benefitAmount: string;
-  benefitType: "Direct Financial Grant" | "Tuition Fee Waiver" | "Subsidized Loan" | "Monthly Stipend" | "Skill Voucher";
-  targetAudience: string;
-  region: string; // State or "All India"
+  benefitDescription: string;
   eligibilityCriteria: SchemeCriterion[];
   requiredDocuments: Array<{
     id: string;
     name: string;
     description: string;
-    sampleHint?: string;
   }>;
-  applicationMethod: "Online Portal" | "Direct Benefit Transfer (DBT)" | "University Desk" | "Common Service Center (CSC)";
+  applicationProcess: "Online Portal" | "Direct Benefit Transfer (DBT)" | "University Desk" | "Common Service Center (CSC)";
   applicationUrl: string;
-  sourceMinistry: string;
-  lastVerifiedDate: string;
-  isDemoReference: boolean;
+  sourceUrl: string;
+  sourceName: string;
+  lastVerifiedAt: string;
+  status: "Active" | "Upcoming";
   importantNotes?: string[];
 }
 
 export interface SchemeMatchResult {
   schemeId: string;
   schemeName: string;
-  category: string;
+  programType: ProgramType;
+  provider: string;
   benefitAmount: string;
-  benefitType: string;
   region: string;
   matchScore: number; // 0 - 100
   confidenceLabel: "HIGH" | "MEDIUM" | "LOW";
@@ -82,9 +93,10 @@ export interface SchemeMatchResult {
   verifiedDocuments: string[];
   missingDocuments: Array<{ id: string; name: string; description: string }>;
   reasoningSummary: string;
+  aiExplanation?: string;
   evidenceSnippets: string[];
   applicationUrl: string;
-  sourceMinistry: string;
+  sourceName: string;
   lastVerifiedDate: string;
 }
 
@@ -104,8 +116,9 @@ export interface CivicFlowActionPlan {
   id: string;
   profileSummary: string;
   generatedAt: string;
-  overallReadinessScore: number; // e.g. 78%
+  overallReadinessScore: number;
   topMatchedScheme: string;
+  topProgramType: ProgramType;
   steps: ActionPlanStep[];
   criticalMissingDocuments: string[];
   disclaimer: string;

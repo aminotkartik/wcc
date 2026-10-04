@@ -15,7 +15,7 @@ export function generateActionPlan(
     id: `step_${stepCounter}`,
     order: stepCounter++,
     title: "Verify Core Eligibility Claims",
-    description: `Review your stated profile parameters (State: ${primaryScheme.region}, Income threshold, and Academic/Occupational status) against official ministry guidelines.`,
+    description: `Review your stated profile parameters (Jurisdiction: ${primaryScheme.region}, Income threshold, and Academic/Occupational status) against official program guidelines.`,
     category: "VERIFICATION",
     status: "completed",
     estimatedMinutes: 5
@@ -32,30 +32,30 @@ export function generateActionPlan(
         category: "DOCUMENT_PREP",
         status: "pending",
         estimatedMinutes: 30,
-        deadlineWarning: "Obtain before application portal window closing"
+        deadlineWarning: "Obtain before portal cycle deadline"
       });
     }
   }
 
-  // Step 3: Verified Credentials Review
+  // Step 3: Verified Credentials Audit
   if (primaryScheme.verifiedDocuments && primaryScheme.verifiedDocuments.length > 0) {
     steps.push({
       id: `step_${stepCounter}`,
       order: stepCounter++,
-      title: `Audit Already Verified Documents (${primaryScheme.verifiedDocuments.join(", ")})`,
-      description: "Ensure names, dates of birth, and father's/mother's names match across all certificates exactly without spelling variations.",
+      title: `Audit Verified Records (${primaryScheme.verifiedDocuments.join(", ")})`,
+      description: "Ensure names, dates of birth, and identity numbers match across all certificates without spelling discrepancies.",
       category: "VERIFICATION",
       status: "in_progress",
       estimatedMinutes: 10
     });
   }
 
-  // Step 4: Submission on Official Ministry Portal
+  // Step 4: Submission on Authorized Official Portal
   steps.push({
     id: `step_${stepCounter}`,
     order: stepCounter++,
-    title: `Submit Online Application on Official Portal`,
-    description: `Navigate to ${primaryScheme.sourceMinistry}'s authorized portal. Create your applicant login, complete form fields, and upload all digitized attachments.`,
+    title: `Submit Online Application via ${primaryScheme.sourceName}`,
+    description: `Navigate to the authorized application portal. Register your applicant account, complete form fields, and upload all required proofs.`,
     category: "ONLINE_APPLICATION",
     status: "pending",
     officialLink: primaryScheme.applicationUrl,
@@ -66,8 +66,8 @@ export function generateActionPlan(
   steps.push({
     id: `step_${stepCounter}`,
     order: stepCounter++,
-    title: "Download Acknowledgement Receipt & Note Tracking Application ID",
-    description: "Save the PDF submission receipt and note the official Application Reference Number for college scrutiny or DBT status tracking.",
+    title: "Download Acknowledgement & Note Application Reference ID",
+    description: "Save the PDF submission receipt and note the official Application Reference Number for tracking sanction status and disbursements.",
     category: "TRACKING",
     status: "pending",
     estimatedMinutes: 5
@@ -80,12 +80,13 @@ export function generateActionPlan(
 
   return {
     id: `plan_${Date.now()}`,
-    profileSummary: `Assessment Plan prepared for ${userFullName || "Beneficiary"}`,
+    profileSummary: `Opportunity Action Plan prepared for ${userFullName || "Applicant"}`,
     generatedAt: new Date().toISOString(),
     overallReadinessScore: Math.max(25, Math.min(95, docReadiness)),
     topMatchedScheme: primaryScheme.schemeName,
+    topProgramType: primaryScheme.programType,
     steps,
     criticalMissingDocuments: (primaryScheme.missingDocuments || []).map(d => d.name),
-    disclaimer: "CivicFlow provides an informational eligibility assessment and tactical preparation plan. Final sanction, scholarship disbursement, or subsidy approval is subject to official government scrutiny."
+    disclaimer: "CivicFlow provides an informational eligibility assessment and tactical preparation plan. Final sanction, scholarship disbursement, or subsidy approval is subject to official scrutiny."
   };
 }

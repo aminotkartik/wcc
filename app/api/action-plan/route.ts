@@ -6,11 +6,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const matches: SchemeMatchResult[] = body.matches;
-    const userFullName: string = body.userFullName || "Beneficiary";
+    const userFullName: string = body.userFullName || "Applicant";
 
     if (!matches || matches.length === 0) {
       return NextResponse.json(
-        { success: false, error: "Requires at least one scheme match result" },
+        { success: false, error: "Requires at least one program match result" },
         { status: 400 }
       );
     }

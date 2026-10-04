@@ -3,21 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 248, 250, 252;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 41, 37, 36;
+  --background-start: #faf8f5;
+  --background-end: #f5f0e8;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #f8fafc;
+  background-color: #faf8f5;
   min-height: 100vh;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-/* Glassmorphism accent */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+/* Warm glassmorphism */
+.warm-panel {
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(235, 225, 210, 0.85);
+}
+
+.warm-card {
+  background: #ffffff;
+  border: 1px solid #ebe1d2;
+}
+
+.warm-card:hover {
+  border-color: #dc6838;
 }

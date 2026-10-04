@@ -1,48 +1,48 @@
-const { assessAllSchemes } = require("./engine-cjs.js");
+const { assessAllPrograms } = require("./engine-cjs.js");
 const { DEMO_PERSONAS } = require("../lib/data/curated-schemes-cjs.js");
 
 const EVALUATION_TEST_CASES = [
   {
     id: "TC-01",
-    description: "Maharashtra B.Tech student with ₹2.4L income qualifies for MahaDBT Post-Matric",
+    description: "Maharashtra B.Tech student with ₹2.4L income qualifies for Higher Degree Scholarship",
     personaIndex: 0,
-    expectedTopSchemeId: "scheme_001",
+    expectedTopSchemeId: "prog_002",
     expectedMinScore: 85,
-    expectedMissingDocsCount: 2,
+    expectedMissingDocsCount: 1,
     expectedStatus: "likely_eligible"
   },
   {
     id: "TC-02",
-    description: "Karnataka rural college scholar qualifies for Vidyasiri scheme",
+    description: "Karnataka rural college scholar qualifies for Karnataka Vidyasiri Welfare Grant",
     personaIndex: 1,
-    expectedTopSchemeId: "scheme_006",
+    expectedTopSchemeId: "prog_009",
     expectedMinScore: 75,
     expectedMissingDocsCount: 2,
     expectedStatus: "likely_eligible"
   },
   {
     id: "TC-03",
-    description: "Maharashtra SC Master's student qualifies for Swadhar Yojana",
+    description: "Maharashtra SC Master's student qualifies for Swadhar Social Justice Welfare Scheme",
     personaIndex: 2,
-    expectedTopSchemeId: "scheme_010",
+    expectedTopSchemeId: "prog_010",
     expectedMinScore: 85,
-    expectedMissingDocsCount: 3,
+    expectedMissingDocsCount: 2,
     expectedStatus: "likely_eligible"
   },
   {
     id: "TC-04",
-    description: "Self-employed micro youth craftsman qualifies for PM SVANidhi",
+    description: "Self-employed micro youth artisan qualifies for PM SVANidhi Subsidy & Micro-Credit",
     personaIndex: 3,
-    expectedTopSchemeId: "scheme_003",
+    expectedTopSchemeId: "prog_007",
     expectedMinScore: 80,
     expectedMissingDocsCount: 1,
     expectedStatus: "likely_eligible"
   },
   {
     id: "TC-05",
-    description: "Smallholder farmer matches PM-KISAN Samman Nidhi",
+    description: "Smallholder farmer matches PM-KISAN Direct Farmer Income Support Grant",
     personaIndex: 4,
-    expectedTopSchemeId: "scheme_008",
+    expectedTopSchemeId: "prog_006",
     expectedMinScore: 80,
     expectedMissingDocsCount: 3,
     expectedStatus: "likely_eligible"
@@ -51,13 +51,13 @@ const EVALUATION_TEST_CASES = [
 
 function runEvaluation() {
   console.log("=================================================");
-  console.log("CIVICFLOW AI — VERIFIED EVALUATION BENCHMARK");
+  console.log("CIVICFLOW AI — UNIVERSAL EVALUATION BENCHMARK");
   console.log("=================================================\n");
 
   let passed = 0;
   for (const tc of EVALUATION_TEST_CASES) {
     const persona = DEMO_PERSONAS[tc.personaIndex];
-    const results = assessAllSchemes(persona.profile, persona.sampleExtractedDocs);
+    const results = assessAllPrograms(persona.profile, persona.sampleExtractedDocs);
     const topResult = results[0];
 
     const matchSchemeOk = topResult.schemeId === tc.expectedTopSchemeId;
@@ -67,7 +67,7 @@ function runEvaluation() {
     if (matchSchemeOk && scoreOk && statusOk) {
       passed++;
       console.log(`[PASS] ${tc.id}: ${tc.description}`);
-      console.log(`       Top: ${topResult.schemeName} (${topResult.matchScore}% | ${topResult.status})`);
+      console.log(`       Top: [${topResult.programType}] ${topResult.schemeName} (${topResult.matchScore}% | ${topResult.status})`);
       console.log(`       Missing Docs: ${topResult.missingDocuments.length} detected.\n`);
     } else {
       console.error(`[FAIL] ${tc.id}`);

@@ -1,4 +1,4 @@
-const { CURATED_SCHEMES, DEMO_PERSONAS } = require("../lib/data/curated-schemes-cjs.js");
+const { UNIVERSAL_PROGRAMS, DEMO_PERSONAS } = require("../lib/data/curated-schemes-cjs.js");
 
 function evaluateCriterion(criterion, user) {
   const userVal = user[criterion.field];
@@ -25,12 +25,17 @@ function evaluateCriterion(criterion, user) {
         return { pass, userVal };
       }
       return { pass: false, userVal };
+    case "contains":
+      return {
+        pass: String(userVal).toLowerCase().includes(String(criterion.value).toLowerCase()),
+        userVal
+      };
     default:
       return { pass: false, userVal };
   }
 }
 
-function evaluateSchemeEligibility(scheme, user, documents = []) {
+function evaluateProgramEligibility(program, user, documents = []) {
   let reconciledIncome = user.annualIncome;
   let verifiedDocTypes = new Set();
 
@@ -49,15 +54,15 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
   const uncertainCriteria = [];
 
   // Regional constraint check
-  if (scheme.region !== "All India" && scheme.region.toLowerCase() !== user.state.toLowerCase()) {
+  if (program.state !== "All India" && program.state.toLowerCase() !== user.state.toLowerCase()) {
     unmetCriteria.push({
-      label: `State Residency Requirement (${scheme.region})`,
+      label: `State Residency Requirement (${program.state})`,
       userValue: user.state,
-      requiredValue: scheme.region
+      requiredValue: program.state
     });
   }
 
-  for (const crit of scheme.eligibilityCriteria) {
+  for (const crit of program.eligibilityCriteria) {
     const { pass, userVal } = evaluateCriterion(crit, activeUser);
     if (pass) {
       matchedCriteria.push({ label: crit.label, userValue: userVal, requiredValue: crit.value });
@@ -72,7 +77,7 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
 
   const missingDocs = [];
   const verifiedDocIds = [];
-  for (const reqDoc of scheme.requiredDocuments) {
+  for (const reqDoc of program.requiredDocuments) {
     if (verifiedDocTypes.has(reqDoc.id.toLowerCase())) {
       verifiedDocIds.push(reqDoc.name);
     } else {
@@ -80,7 +85,7 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
     }
   }
 
-  const totalCriteria = scheme.eligibilityCriteria.length + (scheme.region !== "All India" ? 1 : 0);
+  const totalCriteria = program.eligibilityCriteria.length + (program.state !== "All India" ? 1 : 0);
   const passedCriteriaCount = matchedCriteria.length;
   const unmetCount = unmetCriteria.length;
 
@@ -88,17 +93,19 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
   if (unmetCount > 0) {
     baseScore = Math.max(10, Math.round((passedCriteriaCount / (totalCriteria + 1)) * 40));
   } else {
-    // Specific state match boost
-    const stateSpecificityBoost = scheme.region !== "All India" && scheme.region.toLowerCase() === user.state.toLowerCase() ? 8 : 0;
+    // Specific state domicile match receives high contextual relevance (+10 points for domiciled citizens)
+    const stateSpecificityBoost = program.state !== "All India" && program.state.toLowerCase() === user.state.toLowerCase() ? 10 : 0;
     // Specific category boost
-    const categorySpecificityBoost = scheme.eligibilityCriteria.some(c => c.field === "category" && c.value === user.category) ? 6 : 0;
+    const categorySpecificityBoost = program.eligibilityCriteria.some(c => c.field === "category" && c.value === user.category) ? 6 : 0;
+    // Specific occupation alignment boost
+    const occupationBoost = program.eligibilityCriteria.some(c => c.field === "occupation" && Array.isArray(c.value) && c.value.includes(user.occupation)) ? 4 : 0;
 
     const critRatio = passedCriteriaCount / totalCriteria;
-    baseScore = Math.round(60 + critRatio * 25 + stateSpecificityBoost + categorySpecificityBoost);
+    baseScore = Math.round(60 + critRatio * 25 + stateSpecificityBoost + categorySpecificityBoost + occupationBoost);
   }
 
   if (verifiedDocIds.length > 0 && unmetCount === 0) {
-    baseScore = Math.min(99, baseScore + Math.round((verifiedDocIds.length / scheme.requiredDocuments.length) * 5));
+    baseScore = Math.min(99, baseScore + Math.round((verifiedDocIds.length / program.requiredDocuments.length) * 5));
   }
 
   let status = "unlikely";
@@ -115,8 +122,9 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
   }
 
   return {
-    schemeId: scheme.id,
-    schemeName: scheme.name,
+    schemeId: program.id,
+    schemeName: program.name,
+    programType: program.type,
     matchScore: baseScore,
     confidenceLabel,
     status,
@@ -128,13 +136,13 @@ function evaluateSchemeEligibility(scheme, user, documents = []) {
   };
 }
 
-function assessAllSchemes(user, documents = []) {
-  return CURATED_SCHEMES
-    .map((s) => evaluateSchemeEligibility(s, user, documents))
+function assessAllPrograms(user, documents = []) {
+  return UNIVERSAL_PROGRAMS
+    .map((p) => evaluateProgramEligibility(p, user, documents))
     .sort((a, b) => b.matchScore - a.matchScore);
 }
 
 module.exports = {
-  assessAllSchemes,
-  evaluateSchemeEligibility
+  assessAllPrograms,
+  evaluateProgramEligibility
 };
